@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "Database.hh"
+#include "Statistics.hh"
 
 using namespace std;
 
@@ -30,33 +31,34 @@ int main(int argc, char **argv)
 
     Expression expression;
     Complex answer;
-    double points=0, qst=0;
+    Statistics stats;
+    /* Inicjalizacja */
+    stats.correct = stats.max = stats.wrong = 0; 
 
     while (GetNextQuestion(&base, &expression))
     {
-        qst++;
-
-        cout << endl << "[?] Podaj wynik operacji: ";
+        cout << endl
+             << "[?] Podaj wynik operacji: ";
         Display(expression);
         cout << endl;
 
         cout << "    Twoja odpowiedz: ";
         cin >> answer;
 
-        if(answer==Solve(expression)){
+        if (answer == Solve(expression))
+        {
             cout << "[+] Odpowiedz poprawna" << endl;
-            points++;
-        }else{
+            stats.correct++;
+        }
+        else
+        {
             cout << "[-] Blad. Prawidlowym wynikiem jest: " << Solve(expression) << endl;
+            stats.wrong++;
         }
     }
-
-    double percent = points / qst * 100;
 
     cout << endl;
     cout << " Koniec testu" << endl;
     cout << endl;
-    cout << "Ilosc dobrych odpowiedzi: " << points << endl;
-    cout << "Ilosc blednych odpowiedzi: " << qst - points << endl;
-    cout << "Wynik procentowy poprawnych odpowiedzi: " << percent << "%" << endl;
+    Show(stats);
 }
