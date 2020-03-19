@@ -4,7 +4,7 @@ OBJ=./obj
 FLAGS= -Wall -pedantic -std=c++14 -iquote inc
 
 __start__: ${TRGDIR}/complex_test
-	${TRGDIR}/complex_test  latwy
+	${TRGDIR}/complex_test  trudny
 
 ${TRGDIR}/complex_test: ${OBJ} ${OBJ}/main.o ${OBJ}/Complex.o\
                      ${OBJ}/Expression.o ${OBJ}/Database.o ${OBJ}/Statistics.o

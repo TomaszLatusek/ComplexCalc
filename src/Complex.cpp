@@ -1,6 +1,6 @@
 #include "Complex.hh"
 #include <iostream>
-#include <limits>
+#include <cmath>
 
 using namespace std;
 
@@ -83,10 +83,23 @@ Complex operator/(Complex arg1, Complex arg2)
 }
  */
 
+/*
+ * Realizuje porownanie liczb zespolonych.
+ * Argumenty:
+ *    arg1 - liczba pierwsza,
+ *    ar2 - liczba druga.
+ * Zwraca:
+ *    prawda, jezeli liczby sa sobie rowne
+ *    falsz, jezeli nie sa sobie rowne.
+ */
 bool operator==(Complex arg1, Complex arg2)
 {
-    if (arg1.re == arg2.re && arg1.im == arg2.im)
+    double limit = 0.00001;
+
+    if (abs(arg1.re - arg2.re) <= limit && abs(arg1.im - arg2.im) <= limit)
+    {
         return true;
+    }
     else
         return false;
 }
@@ -116,21 +129,15 @@ ostream &operator<<(ostream &os, Complex c)
 istream &operator>>(istream &is, Complex &c)
 {
     int i = 0;
-    char ch[4];
+    char ch;
 
     while (i <= 3) /* 3 proby poprwnego wpisania liczby */
     {
 
-        is >> ch[0];
-        if (ch[0] != '(')
+        is >> ch;
+        if (ch != '(')
         {
-            is.ignore(32767, '\n');
-            if (i < 3)
-            {
-                cout << endl
-                     << "[!] Blad zapisu liczby zespolonej." << endl;
-                cout << "    Sprobuj jeszcze raz: ";
-            }
+            ShowAlert(is, i);
             i++;
             continue;
         }
@@ -139,27 +146,15 @@ istream &operator>>(istream &is, Complex &c)
         if (is.fail())
         {
             is.clear();
-            is.ignore(32767, '\n');
-            if (i < 3)
-            {
-                cout << endl
-                     << "[!] Blad zapisu liczby zespolonej." << endl;
-                cout << "    Sprobuj jeszcze raz: ";
-            }
+            ShowAlert(is, i);
             i++;
             continue;
         }
 
-        is >> ch[1];
-        if (ch[1] != '+' && ch[1] != '-')
+        is >> ch;
+        if (ch != '+' && ch != '-')
         {
-            is.ignore(32767, '\n');
-            if (i < 3)
-            {
-                cout << endl
-                     << "[!] Blad zapisu liczby zespolonej." << endl;
-                cout << "    Sprobuj jeszcze raz: ";
-            }
+            ShowAlert(is, i);
             i++;
             continue;
         }
@@ -168,47 +163,28 @@ istream &operator>>(istream &is, Complex &c)
         if (is.fail())
         {
             is.clear();
-            is.ignore(32767, '\n');
-            if (i < 3)
-            {
-                cout << endl
-                     << "[!] Blad zapisu liczby zespolonej." << endl;
-                cout << "    Sprobuj jeszcze raz: ";
-            }
+            ShowAlert(is, i);
             i++;
             continue;
         }
-        else if (ch[1] == '-')
+        else if (ch == '-')
         {
             c.im *= -1;
         }
 
-        is >> ch[2];
-        if (ch[2] != 'i')
+        is >> ch;
+        if (ch != 'i')
         {
-            is.ignore(32767, '\n');
-            if (i < 3)
-            {
-                cout << endl
-                     << "[!] Blad zapisu liczby zespolonej." << endl;
-                cout << "    Sprobuj jeszcze raz: ";
-            }
+            ShowAlert(is, i);
             i++;
             continue;
         }
 
-        is >> ch[3];
-        if (ch[3] != ')')
+        is >> ch;
+        if (ch != ')')
         {
-            is.ignore(32767, '\n');
-            if (i < 3)
-            {
-                cout << endl
-                     << "[!] Blad zapisu liczby zespolonej." << endl;
-                cout << "    Sprobuj jeszcze raz: ";
-            }
+            ShowAlert(is, i);
             i++;
-
             continue;
         }
         else
@@ -216,4 +192,19 @@ istream &operator>>(istream &is, Complex &c)
     }
 
     return is;
+}
+
+
+
+/* Sluzy do skrocenia
+przeciazenia >> */
+void ShowAlert(istream &is, int i)
+{
+    is.ignore(32767, '\n');
+    if (i < 3)
+    {
+        cout << endl
+             << "[!] Blad zapisu liczby zespolonej." << endl;
+        cout << "    Sprobuj jeszcze raz: ";
+    }
 }

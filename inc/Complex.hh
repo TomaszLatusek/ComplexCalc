@@ -27,3 +27,6 @@ Complex operator/(Complex arg1, Complex arg2);
 ostream& operator<<(ostream& os,Complex c);
 istream& operator>>(istream& os,Complex& c);
 bool operator==(Complex arg1, Complex arg2);
+
+
+void ShowAlert(istream& is, int i);
