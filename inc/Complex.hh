@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 
-using namespace std;
 /*!
  *  Plik zawiera definicje struktury Complex oraz zapowiedzi
  *  przeciazen operatorow arytmetycznych dzialajacych na tej 
@@ -24,9 +23,9 @@ Complex operator+(Complex arg1, Complex arg2);
 Complex operator-(Complex arg1, Complex arg2);
 Complex operator*(Complex arg1, Complex arg2);
 Complex operator/(Complex arg1, Complex arg2);
-ostream& operator<<(ostream& os,Complex c);
-istream& operator>>(istream& os,Complex& c);
+std::ostream &operator<<(std::ostream &os,Complex c);
+std::istream &operator>>(std::istream &os,Complex &c);
 bool operator==(Complex arg1, Complex arg2);
 
 
-void ShowAlert(istream& is, int i);
+void ShowAlert(std::istream &is, int i);
