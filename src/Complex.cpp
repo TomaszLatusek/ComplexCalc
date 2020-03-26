@@ -91,6 +91,9 @@ Complex operator/(Complex arg1, Complex arg2)
  * Zwraca:
  *    prawda, jezeli liczby sa sobie rowne
  *    falsz, jezeli nie sa sobie rowne.
+ * Uwaga:
+ *    wynik nalezy wprowaadzic z dokladnoscia do 5 cyfr
+ *    po przecinku
  */
 bool operator==(Complex arg1, Complex arg2)
 {
@@ -103,6 +106,43 @@ bool operator==(Complex arg1, Complex arg2)
     else
         return false;
 }
+
+
+/*
+ * Realizuje pomniejszenie arg1 o arg2.
+ * Argumenty:
+ *    arg1 - liczba pierwsza,
+ *    ar2 - liczba druga.
+ * Zwraca:
+ *    nowa wartosc arg1
+ */
+Complex operator-=(Complex &arg1, Complex arg2)
+{
+    arg1.re -= arg2.re;
+    arg1.im -= arg2.im;
+
+    return arg1;
+}
+
+
+
+/*
+ * Realizuje powiekszenie arg1 o arg2.
+ * Argumenty:
+ *    arg1 - liczba pierwsza,
+ *    ar2 - liczba druga.
+ * Zwraca:
+ *    nowa wartosc arg1
+ */
+Complex operator+=(Complex &arg1, Complex arg2)
+{
+    arg1.re += arg2.re;
+    arg1.im += arg2.im;
+
+    return arg1;
+}
+
+
 
 /*!Display
  * Realizuje wyswietlnie liczby zespolonej na ekranie.
@@ -193,8 +233,6 @@ istream &operator>>(istream &is, Complex &c)
 
     return is;
 }
-
-
 
 /* Sluzy do skrocenia
 przeciazenia >> */
